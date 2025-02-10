@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: chat-app-client-service
-  namespace: distributed-chat-alex
+  namespace: distributed-chat-perker-ethen
 spec:
   selector:
     app: chat-app-client

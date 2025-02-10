@@ -5,10 +5,10 @@ metadata:
   namespace: distributed-chat-perker-ethen
 spec:
   rules:
-    - host: perker-ethen-react.duckdns.org
+    - host: api.perker-ethen-react.duckdns.org
       http:
         paths:
-          - path: /api
+          - path: /
             pathType: Prefix
             backend:
               service:

@@ -2,7 +2,7 @@ name: Build and deploy on kubernetes
 on:
   push:
     branches:
-    - main
+      - main
   workflow_dispatch:
 
 jobs:
@@ -22,19 +22,19 @@ jobs:
         run: |
           docker build \
             -f Api/Dockerfile \
-            -t alexmickelson/distributed-chat-api:${{ github.run_number }} \
-            -t alexmickelson/distributed-chat-api:latest \
+            -t codebras/distributed-chat-api:${{ github.run_number }} \
+            -t codebras/distributed-chat-api:latest \
             .
-          
-          docker push alexmickelson/distributed-chat-api --all-tags
+
+          docker push codebras/distributed-chat-api --all-tags
 
           docker build \
             -f Client/Dockerfile \
-            -t alexmickelson/distributed-chat-client:${{ github.run_number }} \
-            -t alexmickelson/distributed-chat-client:latest \
+            -t codebras/distributed-chat-client:${{ github.run_number }} \
+            -t codebras/distributed-chat-client:latest \
             .
-          
-          docker push alexmickelson/distributed-chat-client --all-tags
+
+          docker push codebras/distributed-chat-client --all-tags
 
       - name: Deploy to Kubernetes
         run: |

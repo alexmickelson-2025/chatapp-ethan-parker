@@ -22,7 +22,7 @@ spec:
             - name: POSTGRES_DB
               value: "chatdb"
             - name: POSTGRES_USER
-              value: "chat_user"
+              value: "chatuser"
             - name: POSTGRES_PASSWORD
               value: "secure_password" # Replace with a secure password
           ports:

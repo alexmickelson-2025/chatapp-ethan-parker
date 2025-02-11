@@ -25,7 +25,7 @@ spec:
             - containerPort: 8080
           env:
             - name: CONNECTION_STRING
-              value: Server=db-svc.distributed-chat-perker-ethen.svc.cluster.local;Port=5432;User Id=chatuser;Password=secure_password;Database=chatdb
+              value: Server=db-svc;User Id=chatuser;Password=asoienwoafin;Database=chatdb
           readinessProbe:
             httpGet:
               path: /health

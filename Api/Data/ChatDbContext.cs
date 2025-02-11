@@ -16,7 +16,7 @@ public class ChatDbContext : DbContext
     {
         modelBuilder.Entity<Message>(entity =>
         {
-            entity.ToTable("message", "chatdb");
+            entity.ToTable("message", "postgres");
 
             entity.Property(e => e.Content).HasColumnName("content");
             entity.Property(e => e.TimePosted).HasColumnName("time_posted");

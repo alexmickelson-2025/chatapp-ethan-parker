@@ -4,16 +4,16 @@ metadata:
   namespace: distributed-chat-perker-ethen
   name: chat-db-deployment
   labels:
-    app: chat-db
+    app: db-svc # Changed to match the service selector
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chat-db
+      app: db-svc # Ensure the selector matches the pod label
   template:
     metadata:
       labels:
-        app: chat-db
+        app: db-svc # Changed to match the service selector
     spec:
       containers:
         - name: postgres
@@ -24,7 +24,7 @@ spec:
             - name: POSTGRES_USER
               value: "postgres"
             - name: POSTGRES_PASSWORD
-              value: "postgres" 
+              value: "postgres"
           ports:
             - containerPort: 5432
           volumeMounts:

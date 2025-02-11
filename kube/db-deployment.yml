@@ -24,18 +24,18 @@ spec:
             - name: POSTGRES_USER
               value: "chatuser"
             - name: POSTGRES_PASSWORD
-              value: "secure_password" # Replace with a secure password
+              value: "asoienwoafin" 
           ports:
             - containerPort: 5432
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: postgres-storage
+            # - mountPath: /var/lib/postgresql/data
+            #   name: postgres-storage
             - mountPath: /docker-entrypoint-initdb.d
               name: schema-volume
       volumes:
-        - name: postgres-storage
-          persistentVolumeClaim:
-            claimName: db-pvc
+        # - name: postgres-storage
+        #   persistentVolumeClaim:
+        #     claimName: db-pvc
         - name: schema-volume
           configMap:
             name: db-init

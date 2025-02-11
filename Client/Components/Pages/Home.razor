@@ -1,12 +1,24 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 @using Logic
+@using Logic.Requests
 @inject IConfiguration configuration
 @inject HttpClient HttpClient
 
 <PageTitle>Chat App</PageTitle>
 
 <div>
-    <p>Api url should be: @ApiUri</p>
+    <button @onclick="GetAllMessages">Refresh Messages</button>
+</div>
+
+<div>
+    <label for="MessageUsername">Who are you?</label>
+    <input class="MessageUsername" type="text" @bind="MessageUsername" />
+
+    <label for="MessageContent">What is the content of your message?</label>
+    <input class="MessageContent" type="text" @bind="MessageContent" />
+
+    <button @onclick="PostMessage">Submit</button>
 </div>
 
 @foreach (var message in Messages)
@@ -18,25 +30,67 @@
     </div>
 }
 
-
-@code{
+@code {
     private string ApiUri;
     public List<Message> Messages = new();
 
+    public string MessageContent = "";
+    public string MessageUsername = "";
+
     protected override async Task OnInitializedAsync()
     {
-        ApiUri = configuration["api"] ?? throw new Exception("api uri not found");
-
+        ApiUri = configuration["api"] ?? throw new Exception("API URI not found");
         await GetAllMessages();
     }
 
     public async Task GetAllMessages()
     {
-        var result = await HttpClient.GetFromJsonAsync<List<Message>>($"{ApiUri}/message/getall");
-
-        if (result is not null)
+        try
         {
-            Messages = result;
+            var result = await HttpClient.GetFromJsonAsync<List<Message>>($"{ApiUri}/message/getall");
+
+            if (result is not null)
+            {
+                Messages = result.OrderBy(x => x.TimePosted).ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching messages: {ex.Message}");
+        }
+    }
+
+    public async Task PostMessage()
+    {
+        if (string.IsNullOrWhiteSpace(MessageUsername) || string.IsNullOrWhiteSpace(MessageContent))
+        {
+            Console.WriteLine("Username or message content cannot be empty.");
+            return;
+        }
+
+        var addMessageRequest = new AddMessageRequest
+            {
+                Content = MessageContent,
+                Username = MessageUsername
+            };
+
+        try
+        {
+            var result = await HttpClient.PostAsJsonAsync($"{ApiUri}/message/post", addMessageRequest);
+
+            if (result.IsSuccessStatusCode)
+            {
+                MessageUsername = string.Empty;
+                MessageContent = string.Empty;
+            }
+            else
+            {
+                Console.WriteLine($"Error posting message: {result.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error posting message: {ex.Message}");
         }
     }
 }

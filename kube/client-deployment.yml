@@ -25,7 +25,7 @@ spec:
             - containerPort: 8080
           env: 
             - name: api
-              value: http://chat-app-api:8080
+              value: http://api.perker-ethen-react.duckdns.org
           readinessProbe:
             httpGet:
               path: /

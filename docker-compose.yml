@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     command: dotnet run --project Client
+    environment:
+      - api=http://api:8080
     ports:
       - 8080:8080
   api:

@@ -20,7 +20,7 @@ spec:
           image: postgres:16
           env:
             - name: POSTGRES_DB
-              value: "chat_db"
+              value: "chatdb"
             - name: POSTGRES_USER
               value: "chat_user"
             - name: POSTGRES_PASSWORD

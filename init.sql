@@ -1,4 +1,4 @@
-create role if not exists chatuser;
+create role chatuser;
 
 create schema if not exists chatdb;
 

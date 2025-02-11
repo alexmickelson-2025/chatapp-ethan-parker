@@ -3,3 +3,5 @@ kube/
 **/obj/
 .github/
 **/Dockerfile
+appsettings.Development.json
+appsettings.json

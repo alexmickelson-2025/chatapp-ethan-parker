@@ -1,3 +1,5 @@
+create role if not exists chatuser;
+
 create schema if not exists chatdb;
 
 create table if not exists chatdb.message (

@@ -1,10 +1,13 @@
 using Api.Data;
+using Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ChatDbContext>(options =>
+builder.Services.AddDbContextFactory<ChatDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetValue<string>("CONNECTION_STRING") ?? throw new Exception("Missing CONNECTION_STRING environment variable")));
+
+builder.Services.AddSingleton<IMessageService, MessageService>();
 
 var app = builder.Build();
 

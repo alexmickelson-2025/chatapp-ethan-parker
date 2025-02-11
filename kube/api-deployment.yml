@@ -24,7 +24,7 @@ spec:
           ports:
             - containerPort: 8080
           env:
-            - name: DB_CONNECTION_STRING
+            - name: CONNECTION_STRING
               value: Server=db-svc;Port=5432;Userid=chat_user;Password=secure_password;Database=chat_db"
           readinessProbe:
             httpGet:

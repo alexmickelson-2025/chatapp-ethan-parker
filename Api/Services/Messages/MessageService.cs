@@ -27,8 +27,9 @@ public class MessageService : IMessageService
                             DateTime.Now.Hour,
                             DateTime.Now.Minute,
                             0
-            ),
+            ).ToUniversalTime(),
             Username = addMessageRequest.Username,
+            Id = Random.Shared.Next(0, Int32.MaxValue)
         };
 
         context.Messages.Add(newMessage);
@@ -41,7 +42,7 @@ public class MessageService : IMessageService
     public async Task<List<Message>> GetAllMessages()
     {
         var context = await dbContextFactory.CreateDbContextAsync();
-        
-        return await context.Messages.OrderBy(x => Random.Shared.Next()).ToListAsync();
+
+        return (await context.Messages.ToListAsync()).OrderBy(x => Random.Shared.Next()).ToList();
     }
 }

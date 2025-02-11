@@ -10,6 +10,6 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/healthcheck", () => Results.Ok(new { status = "Healthy" }));
+app.MapGet("/health", () => Results.Ok(new { status = "Healthy" }));
 
 app.Run();

@@ -3,5 +3,7 @@ create table if not exists postgres.message (
     content text, 
     time_posted timestamptz, 
     username text,
-    id int primary key
+    id int primary key,
+    process_id text,
+    lamport_number int
 );

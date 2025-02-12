@@ -8,9 +8,7 @@ public class ChatDbContext : DbContext
     public DbSet<Message> Messages { get; set; }
 
     public ChatDbContext(DbContextOptions<ChatDbContext> options)
-        : base(options)
-    {
-    }
+        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,13 +19,12 @@ public class ChatDbContext : DbContext
             entity.Property(e => e.Content).HasColumnName("content");
             entity.Property(e => e.TimePosted).HasColumnName("time_posted");
             entity.Property(e => e.Username).HasColumnName("username");
-
+            entity.Property(e => e.LamportNumber).HasColumnName("lamport_number");
+            entity.Property(e => e.ProcessId).HasColumnName("process_id");
             entity.Property(e => e.Id).HasColumnName("id");
 
             entity.HasKey(e => e.Id);
-
         });
-
 
         base.OnModelCreating(modelBuilder);
     }

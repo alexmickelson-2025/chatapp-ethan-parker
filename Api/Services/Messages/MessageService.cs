@@ -29,7 +29,9 @@ public class MessageService : IMessageService
                             0
             ).ToUniversalTime(),
             Username = addMessageRequest.Username,
-            Id = Random.Shared.Next(0, Int32.MaxValue)
+            Id = Random.Shared.Next(0, Int32.MaxValue),
+            LamportNumber = addMessageRequest.LamportNumber,
+            ProcessId = addMessageRequest.ProcessId,
         };
 
         context.Messages.Add(newMessage);

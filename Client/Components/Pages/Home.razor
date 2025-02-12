@@ -27,6 +27,8 @@
         <p>@message.Username</p>
         <p>@message.Content</p>
         <p>@message.TimePosted</p>
+        <p>@message.ProcessId</p>
+        <p>@message.LamportNumber</p>
     </div>
 }
 
@@ -36,6 +38,8 @@
 
     public string MessageContent = "";
     public string MessageUsername = "";
+    private string ProcessId = Guid.NewGuid().ToString();
+    private int CurrentLamportNumber { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,10 +73,12 @@
         }
 
         var addMessageRequest = new AddMessageRequest
-            {
-                Content = MessageContent,
-                Username = MessageUsername
-            };
+        {
+            Content = MessageContent,
+            Username = MessageUsername,
+            LamportNumber = CurrentLamportNumber,
+            ProcessId = ProcessId
+        };
 
         try
         {

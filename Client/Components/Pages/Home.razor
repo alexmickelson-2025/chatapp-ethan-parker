@@ -8,30 +8,29 @@
 <PageTitle>Chat App</PageTitle>
 
 <div>
-    <button @onclick="GetAllMessages">Refresh Messages</button>
+    <button @onclick="GetAllMessages" class="refresh-button">Refresh Messages</button>
 </div>
 
-<div>
+<div class="message-form">
     <label for="MessageUsername">Who are you?</label>
-    <input class="MessageUsername" type="text" @bind="MessageUsername" />
+    <input id="MessageUsername" type="text" @bind="MessageUsername" class="input-field" />
 
     <label for="MessageContent">What is the content of your message?</label>
-    <input class="MessageContent" type="text" @bind="MessageContent" />
+    <input id="MessageContent" type="text" @bind="MessageContent" class="input-field" />
 
-    <button @onclick="PostMessage">Submit</button>
+    <button @onclick="PostMessage" class="submit-button">Submit</button>
 </div>
+
 
 @foreach (var message in Messages)
 {
-    <div>
-        <p>@message.Username</p>
-        <p>@message.Content</p>
-        <p>@message.TimePosted</p>
-        <p>@message.ProcessId</p>
-        <p>@message.LamportNumber</p>
+    <div class="message-container">
+        <p class="username">@message.Username</p>
+        <p class="content">@message.Content</p>
+        <p class="timestamp">@message.TimePosted (Lamport: @message.LamportNumber)</p>
+        <p class="process-id">Process ID: @message.ProcessId</p>
     </div>
 }
-
 @code {
     private string ApiUri = "";
     public List<Message> Messages = new();
@@ -55,7 +54,8 @@
 
             if (result is not null)
             {
-                Messages = result.OrderBy(x => x.TimePosted).ToList();
+                Messages = result.OrderBy(x => x.LamportNumber).ThenBy(x => x.ProcessId).ToList();
+                CurrentLamportNumber = Math.Max(Messages.Max(x => x.LamportNumber), CurrentLamportNumber);
             }
         }
         catch (Exception ex)
@@ -76,7 +76,7 @@
         {
             Content = MessageContent,
             Username = MessageUsername,
-            LamportNumber = CurrentLamportNumber,
+            LamportNumber = ++CurrentLamportNumber,
             ProcessId = ProcessId
         };
 
@@ -93,6 +93,8 @@
             {
                 Console.WriteLine($"Error posting message: {result.StatusCode}");
             }
+            await GetAllMessages();
+
         }
         catch (Exception ex)
         {

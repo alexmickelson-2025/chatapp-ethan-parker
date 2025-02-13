@@ -1,0 +1,57 @@
+.message-container {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.username {
+  font-weight: bold;
+  color: #333;
+}
+
+.content {
+  margin: 5px 0;
+}
+
+.timestamp,
+.process-id {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.refresh-button,
+.submit-button {
+  padding: 8px 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.refresh-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.input-field {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}

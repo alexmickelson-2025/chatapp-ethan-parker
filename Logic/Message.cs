@@ -8,4 +8,5 @@ public record Message
     public DateTime TimePosted { get; set; }
     public int LamportNumber { get; set; } = 0;
     public string ProcessId { get; set; } = "";
+    public string ImageUrl { get; set; } = "";
 }

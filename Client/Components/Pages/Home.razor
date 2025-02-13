@@ -18,6 +18,9 @@
     <label for="MessageContent">What is the content of your message?</label>
     <input id="MessageContent" type="text" @bind="MessageContent" class="input-field" />
 
+    <label for="MessageImage">Attach an image (optional)</label>
+    <input id="MessageImage" type="file" @onchange="OnImageSelected" class="input-field" itemtype="png"/>
+
     <button @onclick="PostMessage" class="submit-button">Submit</button>
 </div>
 
@@ -25,6 +28,10 @@
 @foreach (var message in Messages)
 {
     <div class="message-container">
+        @if(message.ImageUrl != null)
+        {
+            <img src="@($"{ImageApiUrl}/images/{message.ImageUrl}")" />
+        }
         <p class="username">@message.Username</p>
         <p class="content">@message.Content</p>
         <p class="timestamp">@message.TimePosted (Lamport: @message.LamportNumber)</p>
@@ -39,10 +46,14 @@
     public string MessageUsername = "";
     private string ProcessId = Guid.NewGuid().ToString();
     private int CurrentLamportNumber { get; set; } = 0;
+    private IBrowserFile? SelectedImage { get; set; }
+
+    private string ImageApiUrl {get; set;} = "";
 
     protected override async Task OnInitializedAsync()
     {
         ApiUri = configuration["api"] ?? throw new Exception("API URI not found");
+        ImageApiUrl = configuration["IMAGE_API_URL"] ?? throw new Exception("IMAGE_API_URL not configured");
         await GetAllMessages();
     }
 
@@ -72,33 +83,41 @@
             return;
         }
 
-        var addMessageRequest = new AddMessageRequest
-        {
-            Content = MessageContent,
-            Username = MessageUsername,
-            LamportNumber = ++CurrentLamportNumber,
-            ProcessId = ProcessId
-        };
-
         try
         {
-            var result = await HttpClient.PostAsJsonAsync($"{ApiUri}/message/post", addMessageRequest);
+            using var content = new MultipartFormDataContent();
 
-            if (result.IsSuccessStatusCode)
+            content.Add(new StringContent(MessageUsername ?? ""), "username");
+            content.Add(new StringContent(MessageContent ?? ""), "content");
+            content.Add(new StringContent((++CurrentLamportNumber).ToString()), "lamport_number");
+            content.Add(new StringContent(ProcessId), "process_id");
+
+            if (SelectedImage != null)
             {
-                MessageUsername = string.Empty;
-                MessageContent = string.Empty;
+                var stream = SelectedImage.OpenReadStream();
+                var fileContent = new StreamContent(stream);
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(SelectedImage.ContentType);
+                content.Add(fileContent, "image", SelectedImage.Name);
             }
-            else
-            {
-                Console.WriteLine($"Error posting message: {result.StatusCode}");
-            }
+
+            var httpClient = new HttpClient();
+            var response = await httpClient.PostAsync($"{ApiUri}/message/post", content);
+
             await GetAllMessages();
-
         }
-        catch (Exception ex)
+        catch
         {
-            Console.WriteLine($"Error posting message: {ex.Message}");
+
         }
     }
+
+    private void OnImageSelected(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            var files = (Microsoft.AspNetCore.Components.Forms.InputFileChangeEventArgs)e.Value;
+            SelectedImage = files.File;
+        }
+    }
+
 }

@@ -22,6 +22,7 @@ public class ChatDbContext : DbContext
             entity.Property(e => e.LamportNumber).HasColumnName("lamport_number");
             entity.Property(e => e.ProcessId).HasColumnName("process_id");
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.ImageUrl).HasColumnName("image_url");
 
             entity.HasKey(e => e.Id);
         });

@@ -5,5 +5,6 @@ create table if not exists postgres.message (
     username text,
     id int primary key,
     process_id text,
-    lamport_number int
+    lamport_number int,
+    image_url text
 );

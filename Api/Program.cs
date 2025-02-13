@@ -14,6 +14,10 @@ builder.Services.AddDbContextFactory<ChatDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetValue<string>("CONNECTION_STRING") ?? throw new Exception("Missing CONNECTION_STRING environment variable")));
 
 builder.Services.AddSingleton<IMessageService, MessageService>();
+builder.Services.AddSingleton<IFilePathService, FilePathService>();
+builder.Services.AddSingleton<IConstants, Constants>();
+
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

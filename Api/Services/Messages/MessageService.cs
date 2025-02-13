@@ -32,6 +32,7 @@ public class MessageService : IMessageService
             Id = Random.Shared.Next(0, Int32.MaxValue),
             LamportNumber = addMessageRequest.LamportNumber,
             ProcessId = addMessageRequest.ProcessId,
+            ImageUrl = addMessageRequest.ImageUrl,
         };
 
         context.Messages.Add(newMessage);

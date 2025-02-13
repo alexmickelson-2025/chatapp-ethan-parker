@@ -6,4 +6,5 @@ public class AddMessageRequest
     public string Username { get; set; } = "";
     public int LamportNumber { get; set; }
     public string ProcessId { get; set; } = "";
+    public string ImageUrl { get; set; } = "";
 }

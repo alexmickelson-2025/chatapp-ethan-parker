@@ -27,7 +27,7 @@ public class FilePathService : IFilePathService
 
         content.Add(fileContent, "file", file.FileName); 
 
-        var response = await httpClient.PostAsync(constansts.ImageUrl + "/addImage", content);
+        var response = await httpClient.PostAsync(constansts.ImageUrl + "/image/addImage", content);
 
         if (response.IsSuccessStatusCode)
         {

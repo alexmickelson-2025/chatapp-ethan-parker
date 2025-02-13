@@ -26,6 +26,8 @@ spec:
           env:
             - name: CONNECTION_STRING
               value: Server=db-svc;Database=postgres;User Id=postgres;Password=postgres
+            - name: IMAGE_API_URL
+              value: ""
           readinessProbe:
             httpGet:
               path: /health

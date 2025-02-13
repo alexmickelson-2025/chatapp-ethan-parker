@@ -23,9 +23,11 @@ spec:
           image: codebras/distributed-chat-client:${IMAGE_TAG}
           ports:
             - containerPort: 8080
-          env: 
+          env:
             - name: api
               value: http://api.perker-ethen-react.duckdns.org
+            - name: IMAGE_API_URL
+              value: ""
           readinessProbe:
             httpGet:
               path: /

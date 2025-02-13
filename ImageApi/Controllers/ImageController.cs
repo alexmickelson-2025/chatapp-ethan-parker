@@ -15,8 +15,8 @@ public class ImageController : Controller
     }
 
     [HttpPost("addimage")]
-    public async Task<string> AddImage(IFormFile image)
+    public async Task<string> AddImage(IFormFile file)
     {
-        return await ImageService.AddImage(image);
+        return await ImageService.AddImage(file);
     }
 }

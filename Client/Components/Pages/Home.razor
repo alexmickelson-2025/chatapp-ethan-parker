@@ -19,7 +19,7 @@
     <input id="MessageContent" type="text" @bind="MessageContent" class="input-field" />
 
     <label for="MessageImage">Attach an image (optional)</label>
-    <input id="MessageImage" type="file" @onchange="OnImageSelected" class="input-field" itemtype="png"/>
+    <InputFile id="MessageImage" OnChange="OnImageSelected" class="input-field" itemtype="png" />
 
     <button @onclick="PostMessage" class="submit-button">Submit</button>
 </div>
@@ -28,7 +28,7 @@
 @foreach (var message in Messages)
 {
     <div class="message-container">
-        @if(message.ImageUrl != null)
+        @if (message.ImageUrl != null)
         {
             <img src="@($"{ImageApiUrl}/images/{message.ImageUrl}")" />
         }
@@ -48,7 +48,7 @@
     private int CurrentLamportNumber { get; set; } = 0;
     private IBrowserFile? SelectedImage { get; set; }
 
-    private string ImageApiUrl {get; set;} = "";
+    private string ImageApiUrl { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -111,12 +111,11 @@
         }
     }
 
-    private void OnImageSelected(ChangeEventArgs e)
+    private void OnImageSelected(InputFileChangeEventArgs e)
     {
-        if (e.Value is not null)
+        if (e is not null)
         {
-            var files = (Microsoft.AspNetCore.Components.Forms.InputFileChangeEventArgs)e.Value;
-            SelectedImage = files.File;
+            SelectedImage = e.File;
         }
     }
 

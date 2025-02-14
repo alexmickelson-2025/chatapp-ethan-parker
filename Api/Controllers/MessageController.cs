@@ -42,10 +42,10 @@ public class MessageController : Controller
             Username = Username
         };
         
-        if(Image != null)
+        if(Image != null && Image != default(IFormFile))
         {
             var possibleImagePath = await filePathService.GetFilePathAsync(Image);
-            if(possibleImagePath != null)
+            if(possibleImagePath != null && possibleImagePath != string.Empty)
             {
                 newMessageRequest.ImageUrl = possibleImagePath;
             }

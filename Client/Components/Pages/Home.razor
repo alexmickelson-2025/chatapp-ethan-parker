@@ -28,7 +28,7 @@
 @foreach (var message in Messages)
 {
     <div class="message-container">
-        @if (message.ImageUrl != null)
+        @if (message.ImageUrl != null && message.ImageUrl != "")
         {
             <img src="@($"{ImageApiUrl}/images/{message.ImageUrl}")" />
         }

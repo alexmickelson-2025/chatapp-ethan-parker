@@ -27,7 +27,7 @@ spec:
             - name: api
               value: http://api.perker-ethen-react.duckdns.org
             - name: IMAGE_API_URL
-              value: "http://image.perker-ethan-react.duckdns.org"
+              value: "http://image.perker-ethen-react.duckdns.org"
           readinessProbe:
             httpGet:
               path: /

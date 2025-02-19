@@ -17,7 +17,7 @@ public class ImageService : IImageService
             Directory.CreateDirectory(folderPath);
         }
 
-        var fileName = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(image.FileName);
+        var fileName = Guid.NewGuid().ToString() + ".png";
 
         var filePath = Path.Combine(folderPath, fileName);
 

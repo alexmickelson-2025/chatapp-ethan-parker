@@ -7,7 +7,7 @@
 .env
 .vscode
 
-wwwroot/
+**/wwwroot/*
 
 # User-specific files
 *.rsuser

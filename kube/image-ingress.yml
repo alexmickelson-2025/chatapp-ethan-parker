@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chat-app-image-api-ingress
+  namespace: distributed-chat-perker-ethen
+spec:
+  rules:
+    - host: image.perker-ethen-react.duckdns.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: chat-app-image-api-service
+                port:
+                  number: 8080

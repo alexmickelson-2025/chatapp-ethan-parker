@@ -27,7 +27,7 @@ spec:
             - name: CONNECTION_STRING
               value: Server=db-svc;Database=postgres;User Id=postgres;Password=postgres
             - name: IMAGE_API_URL
-              value: ""
+              value: "http://chat-app-image-api-service:8080"
           readinessProbe:
             httpGet:
               path: /health

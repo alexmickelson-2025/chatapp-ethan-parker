@@ -36,6 +36,14 @@ jobs:
 
           docker push codebras/distributed-chat-client --all-tags
 
+          docker build \
+            -f ImageApi/Dockerfile \
+            -t codebras/image-api:${{github.run_number}} \
+            -t codebras/image-api:latest \
+            .
+
+          docker push codebras/image-api --all-tags
+
       - name: Deploy to Kubernetes
         run: |
           export PATH=$PATH:~/.nix-profile/bin:/nix/var/nix/profiles/default/bin

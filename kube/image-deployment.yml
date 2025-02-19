@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-app-image-api
+  namespace: distributed-chat-perker-ethen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-app-image-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: chat-app-image-api
+    spec:
+      containers:
+        - name: chat-app-image-api
+          image: codebras/image-api:${IMAGE_TAG}
+          ports:
+            - containerPort: 8080

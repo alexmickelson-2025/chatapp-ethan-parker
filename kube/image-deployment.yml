@@ -23,3 +23,11 @@ spec:
           image: codebras/image-api:${IMAGE_TAG}
           ports:
             - containerPort: 8080
+          volumeMounts:
+            - mountPath: /app/wwwroot/images
+              name: image-storage
+      volumes:
+        - name: image-storage
+          persistentVolumeClaim: 
+            claimName: image1-pvc
+        

@@ -8,10 +8,12 @@ namespace Api.Services;
 public class MessageService : IMessageService
 {
     private readonly IDbContextFactory<ChatDbContext> dbContextFactory;
+    private readonly IConstants constants;
 
-    public MessageService(IDbContextFactory<ChatDbContext> dbContextFactory)
+    public MessageService(IDbContextFactory<ChatDbContext> dbContextFactory, IConstants constants)
     {
         this.dbContextFactory = dbContextFactory;
+        this.constants = constants;
     }
     public async Task<bool> AddMessage(AddMessageRequest addMessageRequest)
     {
@@ -46,6 +48,8 @@ public class MessageService : IMessageService
     public async Task<List<Message>> GetAllMessages()
     {
         var context = await dbContextFactory.CreateDbContextAsync();
+
+        await Task.Delay(constants.IntervalTime);
 
         return (await context.Messages.ToListAsync()).OrderBy(x => Random.Shared.Next()).ToList();
     }

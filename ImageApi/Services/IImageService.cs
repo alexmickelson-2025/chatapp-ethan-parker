@@ -2,5 +2,5 @@
 
 public interface IImageService
 {
-    public Task<string> AddImage(IFormFile image); 
+    public Task<string> AddImage(IFormFile image);
 }

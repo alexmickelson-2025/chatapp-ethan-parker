@@ -17,6 +17,7 @@ services:
     environment:
       - CONNECTION_STRING=Server=db;Database=postgres;User Id=postgres;Password=postgres;
       - IMAGE_API_URLS=http://imageapi1:8080;http://imageapi2:8080;http://imageapi3:8080
+      - INTERVAL_TIME=2000
     ports:
       - 8081:8080
   imageapi1:
@@ -24,6 +25,8 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     command: dotnet run --project ImageApi
+    environment:
+      - INTERVAL_TIME=2000
     ports:
       - 8082:8080
     volumes:
@@ -34,6 +37,8 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     command: dotnet run --project ImageApi
+    environment:
+      - INTERVAL_TIME=2000
     ports:
       - 8083:8080
     volumes:
@@ -44,6 +49,8 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     command: dotnet run --project ImageApi
+    environment:
+      - INTERVAL_TIME=2000
     ports:
       - 8084:8080
     volumes:

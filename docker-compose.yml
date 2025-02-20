@@ -5,7 +5,7 @@ services:
       dockerfile: dev.Dockerfile
     command: dotnet run --project Client
     environment:
-      - api=http://api:8080
+      - api=http://host.docker.internal:8081
       - IMAGE_API_URLS=http://localhost:8082;http://localhost:8083;http://localhost:8084
     ports:
       - 8080:8080
@@ -17,15 +17,11 @@ services:
     environment:
       - CONNECTION_STRING=Server=db;Database=postgres;User Id=postgres;Password=postgres;
       - IMAGE_API_URLS=http://imageapi1:8080;http://imageapi2:8080;http://imageapi3:8080
-    ports:
-      - 8081:8080
   imageapi1:
     build:
       context: .
       dockerfile: dev.Dockerfile
     command: dotnet run --project ImageApi
-    ports:
-      - 8082:8080
     volumes:
       - image_data1:/app/ImageApi/wwwroot/images
 
@@ -34,8 +30,6 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     command: dotnet run --project ImageApi
-    ports:
-      - 8083:8080
     volumes:
       - image_data2:/app/ImageApi/wwwroot/images
 
@@ -44,11 +38,24 @@ services:
       context: .
       dockerfile: dev.Dockerfile
     command: dotnet run --project ImageApi
-    ports:
-      - 8084:8080
     volumes:
       - image_data3:/app/ImageApi/wwwroot/images
 
+  nginx:
+    image: nginx:1.19.4
+    depends_on:
+      - api
+      - imageapi1
+      - imageapi2
+      - imageapi3
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - cache_data:/data/nginx/cache
+    ports:
+      - 8081:8081
+      - 8082:8082
+      - 8083:8083
+      - 8084:8084
   db:
     image: postgres:16
     environment:
@@ -64,3 +71,4 @@ volumes:
   image_data1:
   image_data2:
   image_data3:
+  cache_data:

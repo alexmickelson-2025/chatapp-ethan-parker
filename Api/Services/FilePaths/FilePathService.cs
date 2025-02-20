@@ -5,12 +5,12 @@ namespace Api.Services;
 
 public class FilePathService : IFilePathService
 {
-    private readonly IConstants constansts;
+    private readonly IConstants constants;
     private readonly IHttpClientFactory httpClientFactory;
 
-    public FilePathService(IConstants constansts, IHttpClientFactory httpClientFactory)
+    public FilePathService(IConstants constants, IHttpClientFactory httpClientFactory)
     {
-        this.constansts = constansts;
+        this.constants = constants;
         this.httpClientFactory = httpClientFactory;
     }
 
@@ -27,7 +27,9 @@ public class FilePathService : IFilePathService
 
         content.Add(fileContent, "file", file.FileName);
 
-        var response = await httpClient.PostAsync(constansts.ImageUrls[imageApiId - 1] + "/image/addImage", content);
+        var response = await httpClient.PostAsync(constants.ImageUrls[imageApiId - 1] + "/image/addImage", content);
+
+        await Task.Delay(constants.IntervalTime);
 
         if (response.IsSuccessStatusCode)
         {

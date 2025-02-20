@@ -27,9 +27,9 @@ public class MessageController : Controller
 
     [HttpPost("post")]
     public async Task<bool> AddMessage(
-                                [FromForm(Name = "username")] string Username, 
-                                [FromForm(Name = "content")] string Content, 
-                                [FromForm(Name = "lamport_number")] string LamportString, 
+                                [FromForm(Name = "username")] string Username,
+                                [FromForm(Name = "content")] string Content,
+                                [FromForm(Name = "lamport_number")] string LamportString,
                                 [FromForm(Name = "process_id")] string ProcessId,
                                 [FromForm(Name = "image")] IFormFile? Image)
     {
@@ -41,13 +41,15 @@ public class MessageController : Controller
             ProcessId = ProcessId,
             Username = Username
         };
-        
-        if(Image != null && Image != default(IFormFile))
+
+        if (Image != null && Image != default(IFormFile))
         {
-            var possibleImagePath = await filePathService.GetFilePathAsync(Image);
-            if(possibleImagePath != null && possibleImagePath != string.Empty)
+            var imageApiId = Random.Shared.Next(1, 4);
+            var possibleImagePath = await filePathService.GetFilePathAsync(Image, imageApiId);
+            if (possibleImagePath != null && possibleImagePath != string.Empty)
             {
                 newMessageRequest.ImageUrl = possibleImagePath;
+                newMessageRequest.ImageApiId = imageApiId;
             }
         }
 

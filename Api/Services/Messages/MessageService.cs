@@ -33,6 +33,7 @@ public class MessageService : IMessageService
             LamportNumber = addMessageRequest.LamportNumber,
             ProcessId = addMessageRequest.ProcessId,
             ImageUrl = addMessageRequest.ImageUrl,
+            ImageApiId = addMessageRequest.ImageApiId,
         };
 
         context.Messages.Add(newMessage);

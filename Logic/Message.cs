@@ -9,4 +9,5 @@ public record Message
     public int LamportNumber { get; set; } = 0;
     public string ProcessId { get; set; } = "";
     public string ImageUrl { get; set; } = "";
+    public int? ImageApiId { get; set; }
 }

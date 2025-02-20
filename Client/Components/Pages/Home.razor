@@ -30,7 +30,7 @@
     <div class="message-container">
         @if (message.ImageUrl != null && message.ImageUrl != "")
         {
-            <img src="@($"{ImageApiUrl}/images/{message.ImageUrl}")" />
+            <img src="@($"{ImageApiUrls[(int)message.ImageApiId! - 1]}/images/{message.ImageUrl}")" />
         }
         <p class="username">@message.Username</p>
         <p class="content">@message.Content</p>
@@ -48,12 +48,12 @@
     private int CurrentLamportNumber { get; set; } = 0;
     private IBrowserFile? SelectedImage { get; set; }
 
-    private string ImageApiUrl { get; set; } = "";
+    private string[] ImageApiUrls { get; set; } = [];
 
     protected override async Task OnInitializedAsync()
     {
         ApiUri = configuration["api"] ?? throw new Exception("API URI not found");
-        ImageApiUrl = configuration["IMAGE_API_URL"] ?? throw new Exception("IMAGE_API_URL not configured");
+        ImageApiUrls = configuration["IMAGE_API_URLS"]?.Split(';') ?? throw new Exception("IMAGE_API_URL not configured");
         await GetAllMessages();
     }
 

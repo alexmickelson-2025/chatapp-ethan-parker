@@ -7,4 +7,5 @@ public class AddMessageRequest
     public int LamportNumber { get; set; }
     public string ProcessId { get; set; } = "";
     public string ImageUrl { get; set; } = "";
+    public int? ImageApiId { get; set; }
 }

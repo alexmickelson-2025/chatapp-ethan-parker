@@ -15,7 +15,7 @@ public class FilePathService : IFilePathService
     }
 
 
-    public async Task<string?> GetFilePathAsync(IFormFile file)
+    public async Task<string?> GetFilePathAsync(IFormFile file, int imageApiId)
     {
         var httpClient = httpClientFactory.CreateClient();
 
@@ -25,9 +25,9 @@ public class FilePathService : IFilePathService
         var fileContent = new StreamContent(fileStream);
         fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
 
-        content.Add(fileContent, "file", file.FileName); 
+        content.Add(fileContent, "file", file.FileName);
 
-        var response = await httpClient.PostAsync(constansts.ImageUrl + "/image/addImage", content);
+        var response = await httpClient.PostAsync(constansts.ImageUrls[imageApiId - 1] + "/image/addImage", content);
 
         if (response.IsSuccessStatusCode)
         {

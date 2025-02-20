@@ -6,7 +6,7 @@ services:
     command: dotnet run --project Client
     environment:
       - api=http://api:8080
-      - IMAGE_API_URL=http://localhost:8082
+      - IMAGE_API_URLS=http://localhost:8082;http://localhost:8083;http://localhost:8084
     ports:
       - 8080:8080
   api:
@@ -16,10 +16,10 @@ services:
     command: dotnet run --project Api
     environment:
       - CONNECTION_STRING=Server=db;Database=postgres;User Id=postgres;Password=postgres;
-      - IMAGE_API_URL=http://imageapi:8080
+      - IMAGE_API_URLS=http://imageapi1:8080;http://imageapi2:8080;http://imageapi3:8080
     ports:
       - 8081:8080
-  imageapi:
+  imageapi1:
     build:
       context: .
       dockerfile: dev.Dockerfile
@@ -27,7 +27,27 @@ services:
     ports:
       - 8082:8080
     volumes:
-      - image_data:/app/ImageApi/wwwroot/images
+      - image_data1:/app/ImageApi/wwwroot/images
+
+  imageapi2:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    command: dotnet run --project ImageApi
+    ports:
+      - 8083:8080
+    volumes:
+      - image_data2:/app/ImageApi/wwwroot/images
+
+  imageapi3:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    command: dotnet run --project ImageApi
+    ports:
+      - 8084:8080
+    volumes:
+      - image_data3:/app/ImageApi/wwwroot/images
 
   db:
     image: postgres:16
@@ -41,4 +61,6 @@ services:
 
 volumes:
   postgres_data:
-  image_data:
+  image_data1:
+  image_data2:
+  image_data3:

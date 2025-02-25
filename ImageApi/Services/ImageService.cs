@@ -13,6 +13,8 @@ public class ImageService : IImageService
 
     public async Task<string> AddImage(IFormFile image)
     {
+        await Task.Delay(constants.IntervalTime);
+        
         if (image is null)
         {
             throw new ArgumentNullException(nameof(image));
@@ -31,7 +33,6 @@ public class ImageService : IImageService
 
         using (var stream = new FileStream(filePath, FileMode.Create))
         {
-            await Task.Delay(constants.IntervalTime);
             await image.CopyToAsync(stream);
         }
 

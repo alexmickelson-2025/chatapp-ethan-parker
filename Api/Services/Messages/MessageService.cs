@@ -17,6 +17,8 @@ public class MessageService : IMessageService
     }
     public async Task<bool> AddMessage(AddMessageRequest addMessageRequest)
     {
+        await Task.Delay(constants.IntervalTime);
+
         var context = await dbContextFactory.CreateDbContextAsync();
 
         var newMessage = new Message()
@@ -47,9 +49,9 @@ public class MessageService : IMessageService
 
     public async Task<List<Message>> GetAllMessages()
     {
-        var context = await dbContextFactory.CreateDbContextAsync();
-
         await Task.Delay(constants.IntervalTime);
+
+        var context = await dbContextFactory.CreateDbContextAsync();
 
         return (await context.Messages.ToListAsync()).OrderBy(x => Random.Shared.Next()).ToList();
     }

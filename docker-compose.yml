@@ -5,7 +5,7 @@ services:
       dockerfile: dev.Dockerfile
     command: dotnet run --project Client
     environment:
-      - api=http://host.docker.internal:8081
+      - api=http://api:8080
       - IMAGE_API_URLS=http://localhost:8082;http://localhost:8083;http://localhost:8084
     ports:
       - 8080:8080
@@ -25,6 +25,7 @@ services:
     command: dotnet run --project ImageApi
     environment:
       - INTERVAL_TIME=2000
+      - REDIS_URL=http://localhost:6379
     volumes:
       - image_data1:/app/ImageApi/wwwroot/images
 
@@ -35,6 +36,7 @@ services:
     command: dotnet run --project ImageApi
     environment:
       - INTERVAL_TIME=2000
+      - REDIS_URL=http://localhost:6379
     volumes:
       - image_data2:/app/ImageApi/wwwroot/images
 
@@ -45,6 +47,7 @@ services:
     command: dotnet run --project ImageApi
     environment:
       - INTERVAL_TIME=2000
+      - REDIS_URL=http://localhost:6379
     volumes:
       - image_data3:/app/ImageApi/wwwroot/images
 
@@ -57,12 +60,12 @@ services:
       - imageapi3
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - cache_data:/data/nginx/cache
     ports:
       - 8081:8081
       - 8082:8082
       - 8083:8083
       - 8084:8084
+    
   db:
     image: postgres:16
     environment:
@@ -72,10 +75,16 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  cahce:
+    image: redis:latest:6.2-alpine
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - cache:/data
 
 volumes:
   postgres_data:
   image_data1:
   image_data2:
   image_data3:
-  cache_data:
+  cache:
+

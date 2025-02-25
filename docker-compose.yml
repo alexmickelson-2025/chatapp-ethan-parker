@@ -25,7 +25,7 @@ services:
     command: dotnet run --project ImageApi
     environment:
       - INTERVAL_TIME=2000
-      - REDIS_URL=http://localhost:6379
+      - REDIS_URL=cache:6379
     volumes:
       - image_data1:/app/ImageApi/wwwroot/images
 
@@ -36,7 +36,7 @@ services:
     command: dotnet run --project ImageApi
     environment:
       - INTERVAL_TIME=2000
-      - REDIS_URL=http://localhost:6379
+      - REDIS_URL=cache:6379
     volumes:
       - image_data2:/app/ImageApi/wwwroot/images
 
@@ -47,7 +47,7 @@ services:
     command: dotnet run --project ImageApi
     environment:
       - INTERVAL_TIME=2000
-      - REDIS_URL=http://localhost:6379
+      - REDIS_URL=cache:6379
     volumes:
       - image_data3:/app/ImageApi/wwwroot/images
 
@@ -75,9 +75,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-  cahce:
-    image: redis:latest:6.2-alpine
-    command: redis-server --save 20 1 --loglevel warning
+  cache:
+    image: redis
     volumes: 
       - cache:/data
 

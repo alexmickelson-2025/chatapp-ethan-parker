@@ -25,7 +25,7 @@ app.MapControllers();
 
 app.UseMiddleware<ImageDelayMiddleware>();
 
-app.UseStaticFiles();
+// app.UseStaticFiles();
 
 app.Run();
 

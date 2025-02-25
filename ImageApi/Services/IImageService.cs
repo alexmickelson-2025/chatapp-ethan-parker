@@ -1,4 +1,6 @@
-﻿namespace ImageApi.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ImageApi.Services;
 
 public interface IImageService
 {

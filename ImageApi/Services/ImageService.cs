@@ -4,17 +4,9 @@ namespace ImageApi.Services;
 
 public class ImageService : IImageService
 {
-    private readonly IConstants constants;
-
-    public ImageService(IConstants constants)
-    {
-        this.constants = constants;
-    }
 
     public async Task<string> AddImage(IFormFile image)
-    {
-        await Task.Delay(constants.IntervalTime);
-        
+    {        
         if (image is null)
         {
             throw new ArgumentNullException(nameof(image));

@@ -77,13 +77,10 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   cache:
     image: redis
-    volumes: 
-      - cache:/data
-
+    
 volumes:
   postgres_data:
   image_data1:
   image_data2:
   image_data3:
-  cache:
 

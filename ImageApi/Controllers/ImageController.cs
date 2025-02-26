@@ -41,11 +41,11 @@ public class ImageController : Controller
 
         var possibleFile = await db.StringGetAsync(fileName);
 
-        if(possibleFile.IsNull != true && possibleFile != "")
+        if(possibleFile.HasValue)
         {
-            return File(Encoding.ASCII.GetBytes(possibleFile!), contentType);
+            System.Console.WriteLine("I returned something from the redis cache!");
+            return File((byte[])possibleFile!, contentType);
         }
-
 
 
         if (!System.IO.File.Exists(filePath))
@@ -55,9 +55,9 @@ public class ImageController : Controller
 
         var imageBytes = System.IO.File.ReadAllBytes(filePath);
 
-        var imageString = Encoding.ASCII.GetString(imageBytes);
+        await db.StringSetAsync(fileName, imageBytes, expiry: TimeSpan.FromMinutes(5));
 
-        await db.StringSetAsync(fileName, imageString, expiry: TimeSpan.FromSeconds(10));
+        await Task.Delay(constants.IntervalTime);
 
         return File(imageBytes, contentType);
     }

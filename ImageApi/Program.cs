@@ -23,7 +23,6 @@ app.MapGet("/health", () => Results.Ok(new { status = "Healthy" }));
 
 app.MapControllers();
 
-app.UseMiddleware<ImageDelayMiddleware>();
 
 // app.UseStaticFiles();
 

@@ -6,7 +6,7 @@ services:
     command: dotnet run --project Client
     environment:
       - api=http://api:8080
-      - IMAGE_API_URLS=http://perker-ethan-react.duckdns.org:2904;http://perker-ethan-react.duckdns.org:2905;http://perker-ethan-react.duckdns.org:2906
+      - IMAGE_API_URLS=http://perker-ethen-react.duckdns.org:2904;http://perker-ethen-react.duckdns.org:2905;http://perker-ethen-react.duckdns.org:2906
     ports:
       - 1204:8080
   api:

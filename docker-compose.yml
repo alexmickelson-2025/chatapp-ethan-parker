@@ -6,9 +6,9 @@ services:
     command: dotnet run --project Client
     environment:
       - api=http://api:8080
-      - IMAGE_API_URLS=http://localhost:8082;http://localhost:8083;http://localhost:8084
+      - IMAGE_API_URLS=http://perker-ethan-react.duckdns.org:2904;http://perker-ethan-react.duckdns.org:2905;http://perker-ethan-react.duckdns.org:2906
     ports:
-      - 8080:8080
+      - 1204:8080
   api:
     build:
       context: .
@@ -61,10 +61,9 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 8081:8081
-      - 8082:8082
-      - 8083:8083
-      - 8084:8084
+      - 2904:8082
+      - 2905:8083
+      - 2906:8084
     
   db:
     image: postgres:16

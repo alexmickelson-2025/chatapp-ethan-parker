@@ -43,7 +43,7 @@ public class ImageController : Controller
 
         if(possibleFile.HasValue)
         {
-            System.Console.WriteLine("I returned something from the redis cache!");
+            Console.WriteLine("I returned something from the redis cache!");
             return File((byte[])possibleFile!, contentType);
         }
 
